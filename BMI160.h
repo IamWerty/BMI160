@@ -127,10 +127,19 @@ class BMI160 {
     void gyroNormalMode() {writeReg(REG_CMD, CMD_GYR_NORMAL);}
 
   public:
+	bool isAlive() {
+		return (readReg(REG_CHIP_ID) == 0xD1);
+	}
+  
     void connectionTest() {
       uint8_t id = readReg(REG_CHIP_ID);
       Serial.print("CHIP_ID: ");
       Serial.println(id);  // if print "209" (In HEX:"0xD1") - connection fine
+	  if (isAlive()) {
+		Serial.println("З'єднання OK");
+		} else {
+			Serial.println("Помилка з'єднання!");
+		}
     }
 
     void setAccRange(int g) {
@@ -190,7 +199,7 @@ class BMI160 {
       setAccRange(accG);
       setGyroRange(gyroHz);
     }
-
+	
     SensorData read() {
       SensorData d;
       // accScale & gyroScale alredy in init() — divine by them
