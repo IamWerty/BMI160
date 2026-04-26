@@ -1,6 +1,6 @@
 #include <Wire.h>
 
-#include "BMI160.h"
+#include <BMI160.h>
 
 BMI160 BMI; // This class for behavior of sensor
 Offset off; // This structure for data. TODO: buffer
@@ -9,8 +9,8 @@ void setup() {
   Serial.begin(115200);
   Wire.begin();
   BMI.init(4, 500);        // +-4g, +-500 degrees per second
-  off = BMI.calibrate();
   BMI.connectionTest();
+  off = BMI.calibrate();
 }
 
 void loop() {
